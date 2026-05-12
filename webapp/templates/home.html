@@ -1,0 +1,59 @@
+<!-- HOME.HTML -->
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>NewsForge - Home</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #0f0f1a; color: #fff; min-height: 100vh; }
+        nav { background: #1a1a2e; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #dc143c; }
+        nav h1 { color: #dc143c; font-size: 22px; }
+        nav a { color: #ccc; text-decoration: none; margin-left: 20px; font-size: 14px; }
+        nav a:hover { color: #dc143c; }
+        .container { max-width: 900px; margin: 50px auto; padding: 0 20px; text-align: center; }
+        h2 { font-size: 32px; margin-bottom: 15px; }
+        p { color: #999; margin-bottom: 40px; }
+        .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 30px; }
+        .card { background: #1a1a2e; border: 1px solid #333; border-radius: 10px; padding: 30px; text-align: left; }
+        .card:hover { border-color: #dc143c; }
+        .card h3 { color: #dc143c; margin-bottom: 15px; font-size: 18px; }
+        .card p { color: #999; font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
+        .card a { background: #dc143c; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-size: 14px; }
+        .card a:hover { background: #b01030; }
+        .status-bar { background: #1a1a2e; border: 1px solid #2d7a2d; border-radius: 8px; padding: 15px 20px; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: #4caf50; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>📺 NewsForge</h1>
+        <div>
+            <a href="/">Home</a>
+            <a href="/manual">Manual Video</a>
+            <a href="/history">History</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="status-bar">
+            <div class="dot"></div>
+            <span style="color:#4caf50; font-size:14px;">System Active - Auto Mode GitHub Actions pe chal raha hai</span>
+        </div>
+        <h2>NewsForge</h2>
+        <p>Automated Hindi News Video System - {{ channel }}</p>
+        <div class="cards">
+            <div class="card">
+                <h3>🤖 Auto Mode</h3>
+                <p>GitHub Actions har 30 minute mein trending news detect karke automatically video banata hai aur tumhare laptop pe download karta hai.</p>
+                <a href="/history">Videos Dekho →</a>
+            </div>
+            <div class="card">
+                <h3>✍️ Manual Mode</h3>
+                <p>Apna script khud likho ya paste karo. System images fetch karega, voiceover banayega aur professional video ready kar dega.</p>
+                <a href="/manual">Manual Video Banao →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

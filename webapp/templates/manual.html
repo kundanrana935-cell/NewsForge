@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewsForge - Manual Video Creator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #0f0f1a; color: #fff; min-height: 100vh; }
+        nav { background: #1a1a2e; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #dc143c; }
+        nav h1 { color: #dc143c; font-size: 22px; }
+        nav a { color: #ccc; text-decoration: none; margin-left: 20px; font-size: 14px; }
+        nav a:hover { color: #dc143c; }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        h2 { color: #dc143c; margin-bottom: 25px; font-size: 24px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #ccc; font-size: 14px; }
+        select { width: 100%; padding: 12px; background: #1a1a2e; border: 1px solid #333; color: #fff; border-radius: 6px; font-size: 14px; }
+        textarea { width: 100%; height: 450px; padding: 15px; background: #1a1a2e; border: 1px solid #333; color: #fff; border-radius: 6px; font-size: 15px; line-height: 1.7; resize: vertical; font-family: Arial, sans-serif; }
+        textarea:focus, select:focus { outline: none; border-color: #dc143c; }
+        textarea::placeholder { color: #555; }
+        .word-count { text-align: right; color: #666; font-size: 12px; margin-top: 5px; }
+        .btn { background: #dc143c; color: #fff; border: none; padding: 14px 35px; font-size: 16px; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .btn:hover { background: #b01030; }
+        .btn:disabled { background: #555; cursor: not-allowed; }
+        .progress-box { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; padding: 25px; margin-top: 25px; display: none; }
+        .progress-bar-bg { background: #333; border-radius: 4px; height: 8px; margin: 15px 0; }
+        .progress-bar { background: #dc143c; height: 8px; border-radius: 4px; transition: width 0.5s; }
+        .progress-text { color: #ccc; font-size: 14px; }
+        .progress-percent { color: #dc143c; font-size: 18px; font-weight: bold; }
+        .success-box { background: #0d2d0d; border: 1px solid #2d7a2d; border-radius: 8px; padding: 20px; margin-top: 20px; display: none; }
+        .success-box h3 { color: #4caf50; margin-bottom: 10px; }
+        .success-box p { color: #ccc; font-size: 14px; }
+        .error-box { background: #2d0d0d; border: 1px solid #7a2d2d; border-radius: 8px; padding: 20px; margin-top: 20px; display: none; }
+        .error-box h3 { color: #f44336; }
+        .tips { background: #1a1a2e; border-left: 3px solid #dc143c; padding: 15px; margin-bottom: 25px; border-radius: 0 6px 6px 0; }
+        .tips h4 { color: #dc143c; margin-bottom: 10px; }
+        .tips p { color: #999; font-size: 13px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>📺 NewsForge</h1>
+        <div>
+            <a href="/">Home</a>
+            <a href="/manual">Manual Video</a>
+            <a href="/history">History</a>
+            <a href="/settings">Settings</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>✍️ Manual Video Banao</h2>
+
+        <div class="tips">
+            <h4>💡 Script Likhne Ka Tarika</h4>
+            <p>Apna script bilkul news anchor ki tarah likho. "दोस्तों..." se shuru karo. Deep analysis karo. News agency ka reference do. "यानी कि", "इस वजह से", "लेकिन" jaise words use karo. Ant mein channel ka naam lo. Script jitni detailed hogi, video utni better hogi.</p>
+        </div>
+
+        <div class="form-group">
+            <label>News Category</label>
+            <select id="category">
+                <option value="India">India News</option>
+                <option value="Politics">Politics</option>
+                <option value="Geopolitics">Geopolitics / International</option>
+                <option value="Cricket">Cricket</option>
+                <option value="Economy">Economy</option>
+                <option value="Technology">Technology</option>
+                <option value="Crime">Crime</option>
+                <option value="Bollywood">Bollywood</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Apna Script Yahan Likho ya Paste Karo (Hindi mein)</label>
+            <textarea id="script" placeholder="दोस्तों आज की सबसे बड़ी खबर यह है कि...
+
+यानी कि इस खबर का मतलब यह है कि...
+
+इस वजह से अब स्थिति और जटिल हो गई है...
+
+लेकिन सवाल यह है कि आगे क्या होगा?
+
+फिलहाल के लिए [Channel Name] के साथ इस खबर में इतना ही।" oninput="updateWordCount()"></textarea>
+            <div class="word-count" id="wordCount">0 words</div>
+        </div>
+
+        <button class="btn" id="createBtn" onclick="createVideo()">🎬 Video Banao</button>
+
+        <div class="progress-box" id="progressBox">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span class="progress-text" id="progressMsg">Shuru ho raha hai...</span>
+                <span class="progress-percent" id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar" id="progressBar" style="width:0%"></div>
+            </div>
+            <p style="color:#666; font-size:12px; margin-top:10px;">⏳ Video banana mein 15-25 minute lag sakte hain. Page band mat karo.</p>
+        </div>
+
+        <div class="success-box" id="successBox">
+            <h3>✅ Video Ready Hai!</h3>
+            <p id="successMsg"></p>
+        </div>
+
+        <div class="error-box" id="errorBox">
+            <h3>❌ Error Aaya</h3>
+            <p id="errorMsg"></p>
+        </div>
+    </div>
+
+    <script>
+        let checkInterval = null;
+
+        function updateWordCount() {
+            const text = document.getElementById('script').value;
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            document.getElementById('wordCount').textContent = words + ' words';
+        }
+
+        function createVideo() {
+            const script = document.getElementById('script').value.trim();
+            const category = document.getElementById('category').value;
+
+            if (script.length < 100) {
+                alert('Script bahut chhoti hai! Kam se kam 100 characters likho.');
+                return;
+            }
+
+            document.getElementById('createBtn').disabled = true;
+            document.getElementById('progressBox').style.display = 'block';
+            document.getElementById('successBox').style.display = 'none';
+            document.getElementById('errorBox').style.display = 'none';
+
+            const formData = new FormData();
+            formData.append('script', script);
+            formData.append('category', category);
+
+            fetch('/create_video', { method: 'POST', body: formData })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.error) {
+                        showError(data.error);
+                    } else {
+                        checkInterval = setInterval(checkStatus, 3000);
+                    }
+                })
+                .catch(e => showError(e.toString()));
+        }
+
+        function checkStatus() {
+            fetch('/status')
+                .then(r => r.json())
+                .then(data => {
+                    document.getElementById('progressMsg').textContent = data.message;
+                    document.getElementById('progressPercent').textContent = data.progress + '%';
+                    document.getElementById('progressBar').style.width = data.progress + '%';
+
+                    if (data.step === 'done') {
+                        clearInterval(checkInterval);
+                        document.getElementById('createBtn').disabled = false;
+                        document.getElementById('progressBox').style.display = 'none';
+                        document.getElementById('successBox').style.display = 'block';
+                        document.getElementById('successMsg').textContent = '📁 Video save ho gayi: ' + data.video_path;
+                    } else if (data.step === 'error') {
+                        clearInterval(checkInterval);
+                        showError(data.error);
+                    }
+                });
+        }
+
+        function showError(msg) {
+            document.getElementById('createBtn').disabled = false;
+            document.getElementById('progressBox').style.display = 'none';
+            document.getElementById('errorBox').style.display = 'block';
+            document.getElementById('errorMsg').textContent = msg;
+        }
+    </script>
+</body>
+</html>

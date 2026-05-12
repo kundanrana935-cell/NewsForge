@@ -1,0 +1,73 @@
+name: NewsForge Auto Pipeline
+
+on:
+  schedule:
+    # Har 30 minute mein run hoga - 7am se 10pm IST (1:30 UTC se 16:30 UTC)
+    - cron: '0,30 1-16 * * *'
+  workflow_dispatch:  # Manual trigger bhi kar sakte ho GitHub pe jaake
+
+jobs:
+  build-news-video:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      # Step 1: Code checkout
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Python setup
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      # Step 3: FFmpeg install (video ke liye)
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version
+
+      # Step 4: System libraries install
+      - name: Install System Libraries
+        run: |
+          sudo apt-get install -y \
+            libgl1-mesa-glx \
+            libglib2.0-0 \
+            fonts-noto-color-emoji \
+            fonts-noto-cjk
+
+      # Step 5: Python libraries install
+      - name: Install Python Requirements
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Step 6: Output folders banao
+      - name: Create Output Directories
+        run: |
+          mkdir -p output/images output/audio output/videos database
+
+      # Step 7: Avatar file copy karo assets se
+      - name: Setup Assets
+        run: |
+          ls assets/ || echo "Assets folder empty hai"
+
+      # Step 8: Main pipeline run karo
+      - name: Run News Pipeline
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python main.py
+
+      # Step 9: Agar video bani toh upload karo
+      - name: Upload Video as Artifact (Backup)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: news-video-${{ github.run_number }}
+          path: output/videos/*.mp4
+          retention-days: 7

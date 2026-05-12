@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>NewsForge - Settings</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #0f0f1a; color: #fff; }
+        nav { background: #1a1a2e; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #dc143c; }
+        nav h1 { color: #dc143c; font-size: 22px; }
+        nav a { color: #ccc; text-decoration: none; margin-left: 20px; font-size: 14px; }
+        nav a:hover { color: #dc143c; }
+        .container { max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        h2 { color: #dc143c; margin-bottom: 25px; }
+        .section { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; padding: 25px; margin-bottom: 20px; }
+        .section h3 { color: #fff; margin-bottom: 15px; font-size: 16px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #222; }
+        .row:last-child { border-bottom: none; }
+        .row label { color: #ccc; font-size: 14px; }
+        .row span { color: #888; font-size: 13px; }
+        .badge-ok { color: #4caf50; font-size: 13px; }
+        .badge-warn { color: #ff9800; font-size: 13px; }
+        .note { background: #1a2a1a; border: 1px solid #2d5a2d; border-radius: 6px; padding: 15px; margin-top: 20px; }
+        .note p { color: #888; font-size: 13px; line-height: 1.6; }
+        .note strong { color: #4caf50; }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>📺 NewsForge</h1>
+        <div>
+            <a href="/">Home</a>
+            <a href="/manual">Manual Video</a>
+            <a href="/history">History</a>
+            <a href="/settings">Settings</a>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>⚙️ Settings</h2>
+
+        <div class="section">
+            <h3>🎬 Video Settings</h3>
+            <div class="row"><label>Resolution</label><span>1920 x 1080 (Full HD)</span></div>
+            <div class="row"><label>FPS</label><span>24</span></div>
+            <div class="row"><label>Target Duration</label><span>9-10 minutes</span></div>
+            <div class="row"><label>News Per Video</label><span>6</span></div>
+            <div class="row"><label>Image Duration</label><span>4 seconds each</span></div>
+        </div>
+
+        <div class="section">
+            <h3>🎙️ Voice Settings</h3>
+            <div class="row"><label>Voice</label><span>hi-IN-SwaraNeural (Female Hindi)</span></div>
+            <div class="row"><label>Speed</label><span>+10% (Thodi fast)</span></div>
+            <div class="row"><label>Provider</label><span class="badge-ok">✅ Microsoft Edge TTS (Free)</span></div>
+        </div>
+
+        <div class="section">
+            <h3>🤖 AI Settings</h3>
+            <div class="row"><label>Provider</label><span>Groq API</span></div>
+            <div class="row"><label>Model</label><span>llama-3.3-70b-versatile</span></div>
+            <div class="row"><label>Daily Limit</label><span class="badge-ok">✅ 14,400 requests/day</span></div>
+        </div>
+
+        <div class="section">
+            <h3>📁 Paths</h3>
+            <div class="row"><label>Download Folder</label><span>C:\NewsVideos\</span></div>
+            <div class="row"><label>Avatar File</label><span>assets\avatar.mp4</span></div>
+            <div class="row"><label>Database</label><span>database\newsforge.db</span></div>
+        </div>
+
+        <div class="section">
+            <h3>⏰ Schedule</h3>
+            <div class="row"><label>Auto Mode</label><span>Har 30 minute (7am - 10pm IST)</span></div>
+            <div class="row"><label>Platform</label><span>GitHub Actions (Cloud)</span></div>
+            <div class="row"><label>Laptop Load</label><span class="badge-ok">✅ Near Zero</span></div>
+        </div>
+
+        <div class="note">
+            <p><strong>Settings change karne ke liye:</strong> C:\NewsForge\config.py file Notepad mein kholao aur directly edit karo. Web app se settings change feature future mein aayega.</p>
+        </div>
+    </div>
+</body>
+</html>
