@@ -15,8 +15,8 @@ from datetime import datetime
 from pathlib import Path
 
 # ---- SETTINGS (config se alag hai kyunki laptop pe chalta hai) ----
-GITHUB_TOKEN = "your_github_token_here"        # Same token
-GITHUB_REPO = "your_username/newsforge-videos"  # Same repo
+GITHUB_TOKEN = "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"       # Same token
+GITHUB_REPO = "kundanrana935-cell/NewsForge"  # Same repo
 DOWNLOAD_FOLDER = r"C:\NewsVideos"              # Jahan save hogi
 CHECK_INTERVAL = 300                             # Har 5 minute mein check
 SEEN_RELEASES_FILE = os.path.join(os.path.expanduser("~"), ".newsforge_seen.json")
